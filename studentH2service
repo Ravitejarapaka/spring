@@ -1,4 +1,4 @@
-package com.example.school;
+package com.example.school.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class StudentH2Service implements StudentService {
     private StudentRepository studentRepository;
 
     @Override
-    public List<Student> getAllStudents() {
+    public ArrayList<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
@@ -27,7 +27,7 @@ public class StudentH2Service implements StudentService {
     }
 
     @Override
-    public List<Integer> createStudents(List<Student> students) {
+    public ArrayList<Integer> createStudents(List<Student> students) {
         return studentRepository.saveAll(students);
     }
 
