@@ -1,0 +1,40 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class HotelJpaService {
+    @Autowired
+    private HotelRepository hotelRepository;
+
+    public List<Hotel> getAllHotels() {
+        return hotelRepository.findAll();
+    }
+
+    public Hotel getHotelById(int hotelId) {
+        Optional<Hotel> optionalHotel = hotelRepository.findById(hotelId);
+        return optionalHotel.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found"));
+    }
+
+    public Hotel saveHotel(Hotel hotel) {
+        return hotelRepository.save(hotel);
+    }
+
+    public Hotel updateHotel(int hotelId, Hotel updatedHotel) {
+        Hotel existingHotel = getHotelById(hotelId);
+        existingHotel.setHotelName(updatedHotel.getHotelName());
+        existingHotel.setLocation(updatedHotel.getLocation());
+        existingHotel.setRating(updatedHotel.getRating());
+        return hotelRepository.save(existingHotel);
+    }
+
+    public void deleteHotel(int hotelId) {
+        if (hotelRepository.existsById(hotelId)) {
+            hotelRepository.deleteById(hotelId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found");
+        }
+    }
+}
