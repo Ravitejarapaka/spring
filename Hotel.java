@@ -1,3 +1,5 @@
+package com.example.nxtstayz.model;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,13 +11,46 @@ public class Hotel {
     private int hotelId;
 
     @Column(name = "name")
-    private String hotelName;
+    private String name;
 
     @Column(name = "location")
     private String location;
 
-    @Column(name = "rating")
-    private int rating;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    private List<Room> rooms;
 
-    // Getters and setters
+    public Hotel() {
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
 }
